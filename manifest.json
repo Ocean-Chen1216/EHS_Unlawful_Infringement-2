@@ -1,6 +1,6 @@
 {
-  "name": "@MK 職安衛巡檢",
-  "short_name": "MK檢點",
+  "name": "職安衛巡檢",
+  "short_name": "不法侵害環境檢點表",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f3f4f6",
@@ -17,4 +17,5 @@
       "type": "image/png"
     }
   ]
+
 }
