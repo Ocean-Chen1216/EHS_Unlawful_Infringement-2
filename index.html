@@ -1,919 +1,1391 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>不法侵害環境檢點</title>
-    <link rel="icon" href="icon-192.png" type="image/png">
-    <link rel="manifest" href="manifest.json">
-    <style>
-        :root { --primary: #2563eb; --bg: #f3f4f6; --card: #ffffff; --text: #1f2937; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); margin: 0; padding: 20px 20px 100px 20px; color: var(--text); max-width: 800px; margin: 0 auto; }
-        
-        /* 卡片 UI */
-        .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 16px; border: 1px solid #e5e7eb; }
-        .header-card { border-top: 6px solid var(--primary); }
-        h2 { margin: 0 0 15px 0; color: var(--primary); font-size: 1.5rem; display: flex; align-items: center; gap: 8px; }
-        h3 { margin: 0 0 15px 0; color: #333; font-size: 1.1rem; border-left: 4px solid var(--primary); padding-left: 10px; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MK環境檢點表 v17.1 (自動填入標準版)</title>
+<link rel="manifest" href="manifest.json">
+<style>
+    body { font-family: -apple-system, "Microsoft JhengHei", sans-serif; background: #f0f2f5; margin: 0; padding: 0; color: #333; }
+    
+    .container { 
+        background: white; 
+        padding: 15px; 
+        margin: 15px auto 100px auto; 
+        max-width: 800px;
+        border-radius: 10px; 
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+    }
+    
+    .version-tag { text-align: right; font-size: 0.8rem; color: #888; margin-bottom: 5px; }
+    
+    /* 區塊樣式 - 統一風格 */
+    .section { margin-bottom: 20px; border: 1px solid #eee; padding: 15px; border-radius: 8px; background: #fff; }
+    .section h3 { 
+        margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; 
+        font-size: 1.1rem; color: #0288d1; display: flex; justify-content: space-between; align-items: center;
+    }
 
-        /* 輸入欄位 */
-        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem; color: #4b5563; }
-        input[type="text"], select { width: 100%; padding: 12px; border: 2px solid #e5e7eb; border-radius: 10px; font-size: 16px; box-sizing: border-box; margin-bottom: 12px; background: #fff; }
-        
-        /* 摺疊區塊 */
-        details { background: var(--card); margin-bottom: 12px; border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        summary { padding: 18px; background: #fff; font-weight: 700; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; }
-        summary::-webkit-details-marker { display: none; }
-        summary::after { content: '▼'; color: #9ca3af; transition: 0.2s; }
-        details[open] summary { background: #f8fafc; color: var(--primary); border-bottom: 1px solid #e2e8f0; }
-        details[open] summary::after { transform: rotate(180deg); }
-        
-        /* 檢點項目 */
-        .check-item { padding: 20px; border-bottom: 1px solid #f1f5f9; }
-        .check-item:last-child { border-bottom: none; }
-        .item-title { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; color: #111; }
-        .item-desc { font-size: 0.9rem; color: #475569; margin-bottom: 16px; background: #f1f5f9; padding: 12px; border-radius: 8px; border-left: 4px solid #cbd5e1; line-height: 1.5; }
-        
-        /* 按鈕樣式 (實心色塊) */
-        .radio-container { display: grid; grid-template-columns: 1fr 1fr 0.6fr; gap: 10px; }
-        .radio-label { position: relative; display: flex; align-items: center; justify-content: center; padding: 14px; border: 1px solid #cbd5e1; border-radius: 8px; cursor: pointer; font-weight: bold; color: #64748b; background: white; transition: all 0.2s; box-shadow: 0 2px 0 rgba(0,0,0,0.05); }
-        input[type="radio"] { display: none; }
-        .opt-pass input:checked + div { background: #10b981; color: white; border-color: #059669; box-shadow: 0 2px 5px rgba(16, 185, 129, 0.4); }
-        .opt-fail input:checked + div { background: #ef4444; color: white; border-color: #dc2626; box-shadow: 0 2px 5px rgba(239, 68, 68, 0.4); }
-        .opt-na input:checked + div { background: #6b7280; color: white; border-color: #4b5563; }
-        .radio-label div { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; border-radius: 7px; }
-        .opt-pass:has(input:checked) { background: #10b981; border-color: #059669; }
-        .opt-fail:has(input:checked) { background: #ef4444; border-color: #dc2626; }
-        .opt-na:has(input:checked) { background: #6b7280; border-color: #4b5563; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 0.95rem; }
+    select, input[type="text"], input[type="date"] { 
+        width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; 
+        font-size: 16px; margin-bottom: 10px; box-sizing: border-box; background: #fff; 
+    }
 
-        /* 異常說明框 */
-        .note-box { display: none; margin-top: 15px; animation: fadeIn 0.3s; background: #fff1f2; padding: 15px; border-radius: 12px; border: 1px solid #fecaca; }
-        .note-title { color: #b91c1c; font-weight: bold; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; font-size: 0.95rem; }
-        .input-group { margin-bottom: 12px; }
-        .input-group label { color: #7f1d1d; font-size: 0.85rem; margin-bottom: 4px; }
-        .input-group textarea { width: 100%; border: 1px solid #fca5a5; background: #fff; padding: 10px; border-radius: 8px; min-height: 60px; font-family: inherit; font-size: 1rem; box-sizing: border-box; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+    /* 檢點項目列表樣式 */
+    details { margin-bottom: 15px; border: 1px solid #eee; border-radius: 6px; overflow: hidden; background: #fff; }
+    summary { 
+        padding: 12px 15px; 
+        background: #fafafa; 
+        font-weight: bold; 
+        color: #0288d1; 
+        cursor: pointer; 
+        list-style: none; 
+        display: flex; justify-content: space-between; align-items: center;
+        border-bottom: 1px solid #eee;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '▼'; font-size: 0.8rem; color: #999; transition: 0.2s; }
+    details[open] summary::after { transform: rotate(180deg); }
+    details[open] summary { border-bottom: 1px solid #ddd; background: #f0f8ff; }
 
-        /* 簽名板 */
-        .signature-container { position: relative; width: 100%; height: 200px; border: 2px dashed #cbd5e1; border-radius: 10px; background: #fff; margin-bottom: 10px; touch-action: none; }
-        canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
-        .sig-controls { text-align: right; }
-        .btn-clear { background: #fff; border: 1px solid #cbd5e1; padding: 5px 15px; border-radius: 20px; color: #64748b; font-size: 0.9rem; cursor: pointer; }
+    .check-item { padding: 15px; border-bottom: 1px solid #f0f2f5; }
+    .check-item:last-child { border-bottom: none; }
+    
+    .item-title { font-weight: bold; margin-bottom: 5px; font-size: 1rem; color: #333; }
+    .item-desc { font-size: 0.85rem; color: #666; background: #f9f9f9; padding: 8px; border-radius: 4px; margin-bottom: 10px; }
 
-        /* --- V11 新版右下角懸浮按鈕樣式 --- */
-        .fab-container {
-            position: fixed;
-            bottom: 30px;
-            right: 25px;
-            display: flex;
-            flex-direction: row-reverse; /* 主按鈕在右邊 */
-            gap: 15px;
-            z-index: 2000;
-            align-items: center;
-        }
+    /* 按鈕群組 (Radio Buttons) */
+    .radio-group { display: flex; gap: 5px; margin-bottom: 10px; }
+    .radio-label { 
+        flex: 1; text-align: center; padding: 8px; 
+        border: 1px solid #ddd; border-radius: 6px; cursor: pointer; 
+        font-size: 0.9rem; background: white; color: #555; transition: 0.2s;
+    }
+    input[type="radio"] { display: none; }
+    
+    /* 選中狀態顏色 */
+    .opt-pass input:checked + div { background: #27ae60; color: white; border-color: #27ae60; font-weight: bold; } /* 綠色 */
+    .opt-fail input:checked + div { background: #c0392b; color: white; border-color: #c0392b; font-weight: bold; } /* 紅色 */
+    .opt-na input:checked + div { background: #95a5a6; color: white; border-color: #95a5a6; } /* 灰色 */
 
-        /* 主按鈕 (下載) */
-        .btn-float-main {
-            background: #2563eb;
-            color: white;
-            padding: 14px 28px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
-            border: none;
-            display: flex; align-items: center; gap: 8px;
-            cursor: pointer; 
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .btn-float-main:hover { background: #1d4ed8; box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5); }
-        .btn-float-main:active { transform: scale(0.95); }
+    /* 異常輸入框 */
+    .note-box { display: none; margin-top: 10px; padding: 10px; background: #fff5f5; border: 1px solid #feb2b2; border-radius: 6px; }
+    .note-box.show { display: block; animation: slideDown 0.3s; }
+    .note-label { font-size: 0.85rem; color: #c0392b; margin-bottom: 3px; font-weight: bold; }
+    textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; min-height: 60px; margin-bottom: 5px; box-sizing: border-box; }
 
-        /* 次要按鈕 (重置) */
-        .btn-float-sec {
-            background: white;
-            color: #64748b;
-            padding: 12px 20px;
-            border-radius: 50px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            border: 1px solid #e2e8f0;
-            cursor: pointer;
-            transition: transform 0.2s;
-            display: flex; align-items: center; gap: 6px;
-        }
-        .btn-float-sec:hover { background: #f8fafc; }
-        .btn-float-sec:active { transform: scale(0.95); }
-        
-        .hidden { display: none !important; }
-        
-        @media print { .fab-container { display: none; } }
+    /* 簽名板 */
+    canvas { width: 100%; height: 150px; border: 2px dashed #ccc; border-radius: 4px; cursor: crosshair; }
+
+    /* 懸浮按鈕 */
+    .fab-container {
+        position: fixed; bottom: 25px; right: 25px;
+        display: flex; flex-direction: column; gap: 12px; z-index: 1000;
+    }
+    .btn-float {
+        display: flex; align-items: center; justify-content: center;
+        padding: 12px 20px; border-radius: 50px; color: white; font-weight: bold;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3); cursor: pointer; border: none; font-size: 1rem;
+        min-width: 140px; transition: transform 0.2s;
+    }
+    .btn-float:active { transform: scale(0.96); }
+    .btn-main { background: linear-gradient(135deg, #27ae60, #2ecc71); }
+    .btn-sub { background: linear-gradient(135deg, #2980b9, #3498db); font-size: 0.9rem; }
+    .btn-reset { background: linear-gradient(135deg, #7f8c8d, #95a5a6); font-size: 0.9rem; }
+
+    @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+    .error-border { border: 2px solid red !important; }
     </style>
 </head>
 <body>
-    <div class="container" id="app-root">
-        <div class="card header-card">
-            <h2>🛡️不法侵害環境檢點</h2>
-            <label>📅 檢點日期</label>
-            <input type="text" id="check-date" readonly>
-            <label>👤 檢點人員</label>
-            <input type="text" id="inspector" placeholder="輸入姓名">
-            <label>📍 區域篩選</label>
-            <select id="area-select" onchange="filterArea()">
-                <option value="All">顯示全部</option>
-                <option value="辦公區">辦公區 (Office)</option>
-                <option value="實驗室">實驗室 (Lab)</option>
-                <option value="樣品室">樣品室 (Sample Room)</option>
-                <option value="接待區">接待區 (Reception)</option>
-            </select>
-        </div>
 
-        <div id="checklist-body">
+<div class="container">
+  <div class="version-tag">v17.1 (自動填入標準版)</div>
+  <h2 style="text-align:center; color:#2c3e50; margin-bottom:20px;">不法侵害環境檢點表</h2>
+  
+  <div class="section">
+    <h3>1. 基本資料</h3>
+    <label>檢點人員</label><input type="text" id="inspector" placeholder="請輸入姓名">
+    <label>受稽部門</label><select id="dept-select"><option value="V1">V1</option>
+<option value="V2">V2</option>
+<option value="V3">V3</option>
+<option value="V5">V5</option>
+<option value="V6">V6</option>
+<option value="V7">V7</option>
+<option value="工務">工務</option>
+<option value="行銷">行銷</option>
+<option value="財會">財會</option>
+<option value="開發">開發</option>
+<option value="資訊">資訊</option>
+<option value="運籌">運籌</option>
+<option value="新事業">新事業</option>
+<option value="總管理">總管理</option></select>
+    <label>檢點日期</label><input type="date" id="check-date">
+  </div>
 
-        <details open><summary>物理環境</summary><div class="details-content">
+  <div class="section">
+    <h3>2. 環境檢點項目</h3>
+    <div id="checklist-body">
+
+        <details open>
+            <summary>物理環境</summary>
+            <div class="cat-content">
         
-                <div class="check-item" data-area="全區域" data-std="保持最低限噪音(控制於80分貝以下)，避免刺激情緒或形成緊張態勢。" data-name="噪音控制">
+                <div class="check-item" data-name="噪音控制" id="item_q_0">
                     <div class="item-title">噪音控制</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>保持最低限噪音(控制於80分貝以下)，避免刺激情緒或形成緊張態勢。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_0" value="Pass" onclick="toggleNote('q_0', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_0" value="Fail" onclick="toggleNote('q_0', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_0" value="NA" onclick="toggleNote('q_0', false)"><div>N/A</div></label>
+                    <div class="item-desc">保持最低限噪音(控制於80分貝以下)，避免刺激情緒或形成緊張態勢。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_0" value="Pass" onclick="toggleNote('q_0', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_0" value="Fail" onclick="toggleNote('q_0', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_0" value="NA" onclick="toggleNote('q_0', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_0" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_0"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_0"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_0" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_0" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="保持室內、室外照明良好，各區域視野清晰。" data-name="照明狀況">
+                <div class="check-item" data-name="照明狀況" id="item_q_1">
                     <div class="item-title">照明狀況</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>保持室內、室外照明良好，各區域視野清晰。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_1" value="Pass" onclick="toggleNote('q_1', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_1" value="Fail" onclick="toggleNote('q_1', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_1" value="NA" onclick="toggleNote('q_1', false)"><div>N/A</div></label>
+                    <div class="item-desc">保持室內、室外照明良好，各區域視野清晰。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_1" value="Pass" onclick="toggleNote('q_1', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_1" value="Fail" onclick="toggleNote('q_1', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_1" value="NA" onclick="toggleNote('q_1', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_1" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_1"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_1"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_1" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_1" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="樣品室/倉庫" data-std="特別是夜間出入口、停車場及貯藏室(樣品室)應有充足照明，無死角。" data-name="死角照明">
+                <div class="check-item" data-name="死角照明" id="item_q_2">
                     <div class="item-title">死角照明</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>特別是夜間出入口、停車場及貯藏室(樣品室)應有充足照明，無死角。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_2" value="Pass" onclick="toggleNote('q_2', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_2" value="Fail" onclick="toggleNote('q_2', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_2" value="NA" onclick="toggleNote('q_2', false)"><div>N/A</div></label>
+                    <div class="item-desc">特別是夜間出入口、停車場及貯藏室(樣品室)應有充足照明，無死角。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_2" value="Pass" onclick="toggleNote('q_2', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_2" value="Fail" onclick="toggleNote('q_2', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_2" value="NA" onclick="toggleNote('q_2', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_2" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_2"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_2"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_2" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_2" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="在擁擠區域及天氣燥熱時，應保持空間內適當溫度、濕度及通風良好。" data-name="溫濕度控制">
+                <div class="check-item" data-name="溫濕度控制" id="item_q_3">
                     <div class="item-title">溫濕度控制</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>在擁擠區域及天氣燥熱時，應保持空間內適當溫度、濕度及通風良好。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_3" value="Pass" onclick="toggleNote('q_3', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_3" value="Fail" onclick="toggleNote('q_3', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_3" value="NA" onclick="toggleNote('q_3', false)"><div>N/A</div></label>
+                    <div class="item-desc">在擁擠區域及天氣燥熱時，應保持空間內適當溫度、濕度及通風良好。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_3" value="Pass" onclick="toggleNote('q_3', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_3" value="Fail" onclick="toggleNote('q_3', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_3" value="NA" onclick="toggleNote('q_3', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_3" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_3"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_3"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_3" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_3" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="實驗室" data-std="實驗室與作業場所應消除異味，避免環境不適引發情緒。" data-name="異味消除">
+                <div class="check-item" data-name="異味消除" id="item_q_4">
                     <div class="item-title">異味消除</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>實驗室與作業場所應消除異味，避免環境不適引發情緒。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_4" value="Pass" onclick="toggleNote('q_4', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_4" value="Fail" onclick="toggleNote('q_4', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_4" value="NA" onclick="toggleNote('q_4', false)"><div>N/A</div></label>
+                    <div class="item-desc">實驗室與作業場所應消除異味，避免環境不適引發情緒。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_4" value="Pass" onclick="toggleNote('q_4', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_4" value="Fail" onclick="toggleNote('q_4', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_4" value="NA" onclick="toggleNote('q_4', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_4" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_4"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_4"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_4" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_4" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="維護建築物理結構及設備之安全。" data-name="結構安全">
+                <div class="check-item" data-name="結構安全" id="item_q_5">
                     <div class="item-title">結構安全</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>維護建築物理結構及設備之安全。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_5" value="Pass" onclick="toggleNote('q_5', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_5" value="Fail" onclick="toggleNote('q_5', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_5" value="NA" onclick="toggleNote('q_5', false)"><div>N/A</div></label>
+                    <div class="item-desc">維護建築物理結構及設備之安全。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_5" value="Pass" onclick="toggleNote('q_5', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_5" value="Fail" onclick="toggleNote('q_5', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_5" value="NA" onclick="toggleNote('q_5', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_5" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_5"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_5"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_5" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_5" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             </div></details>
-        <details open><summary>場所設計</summary><div class="details-content">
+        <details open>
+            <summary>場所設計</summary>
+            <div class="cat-content">
         
-                <div class="check-item" data-area="全區域" data-std="盡量減少對外通道分歧，確保動線單純。" data-name="通道規劃">
+                <div class="check-item" data-name="通道規劃" id="item_q_6">
                     <div class="item-title">通道規劃</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>盡量減少對外通道分歧，確保動線單純。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_6" value="Pass" onclick="toggleNote('q_6', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_6" value="Fail" onclick="toggleNote('q_6', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_6" value="NA" onclick="toggleNote('q_6', false)"><div>N/A</div></label>
+                    <div class="item-desc">盡量減少對外通道分歧，確保動線單純。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_6" value="Pass" onclick="toggleNote('q_6', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_6" value="Fail" onclick="toggleNote('q_6', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_6" value="NA" onclick="toggleNote('q_6', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_6" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_6"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_6"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_6" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_6" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="辦公區/實驗室" data-std="員工識別證、加設密碼鎖與門禁、訪客登記等措施，避免未獲授權之人擅自進出。" data-name="門禁權限">
+                <div class="check-item" data-name="門禁權限" id="item_q_7">
                     <div class="item-title">門禁權限</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>員工識別證、加設密碼鎖與門禁、訪客登記等措施，避免未獲授權之人擅自進出。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_7" value="Pass" onclick="toggleNote('q_7', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_7" value="Fail" onclick="toggleNote('q_7', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_7" value="NA" onclick="toggleNote('q_7', false)"><div>N/A</div></label>
+                    <div class="item-desc">員工識別證、加設密碼鎖與門禁、訪客登記等措施，避免未獲授權之人擅自進出。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_7" value="Pass" onclick="toggleNote('q_7', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_7" value="Fail" onclick="toggleNote('q_7', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_7" value="NA" onclick="toggleNote('q_7', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_7" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_7"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_7"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_7" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_7" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="樣品室/倉庫" data-std="未使用之門予以上鎖，防止加害人進入及藏匿(如樣品室)，惟應符合消防法規。" data-name="門鎖管理">
+                <div class="check-item" data-name="門鎖管理" id="item_q_8">
                     <div class="item-title">門鎖管理</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>未使用之門予以上鎖，防止加害人進入及藏匿(如樣品室)，惟應符合消防法規。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_8" value="Pass" onclick="toggleNote('q_8', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_8" value="Fail" onclick="toggleNote('q_8', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_8" value="NA" onclick="toggleNote('q_8', false)"><div>N/A</div></label>
+                    <div class="item-desc">未使用之門予以上鎖，防止加害人進入及藏匿(如樣品室)，惟應符合消防法規。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_8" value="Pass" onclick="toggleNote('q_8', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_8" value="Fail" onclick="toggleNote('q_8', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_8" value="NA" onclick="toggleNote('q_8', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_8" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_8"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_8"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_8" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_8" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="廁所、茶水間、公共電話區應有明顯標示，方便運用及有適當維護。" data-name="設施標示">
+                <div class="check-item" data-name="設施標示" id="item_q_9">
                     <div class="item-title">設施標示</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>廁所、茶水間、公共電話區應有明顯標示，方便運用及有適當維護。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_9" value="Pass" onclick="toggleNote('q_9', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_9" value="Fail" onclick="toggleNote('q_9', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_9" value="NA" onclick="toggleNote('q_9', false)"><div>N/A</div></label>
+                    <div class="item-desc">廁所、茶水間、公共電話區應有明顯標示，方便運用及有適當維護。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_9" value="Pass" onclick="toggleNote('q_9', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_9" value="Fail" onclick="toggleNote('q_9', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_9" value="NA" onclick="toggleNote('q_9', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_9" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_9"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_9"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_9" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_9" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="應設置安全區域並建立緊急疏散程序。" data-name="緊急疏散">
+                <div class="check-item" data-name="緊急疏散" id="item_q_10">
                     <div class="item-title">緊急疏散</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>應設置安全區域並建立緊急疏散程序。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_10" value="Pass" onclick="toggleNote('q_10', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_10" value="Fail" onclick="toggleNote('q_10', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_10" value="NA" onclick="toggleNote('q_10', false)"><div>N/A</div></label>
+                    <div class="item-desc">應設置安全區域並建立緊急疏散程序。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_10" value="Pass" onclick="toggleNote('q_10', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_10" value="Fail" onclick="toggleNote('q_10', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_10" value="NA" onclick="toggleNote('q_10', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_10" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_10"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_10"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_10" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_10" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="樣品室/實驗室" data-std="工作空間內宜有兩個出口(或退避空間)，避免單一出入口遭堵塞。" data-name="雙向出口">
+                <div class="check-item" data-name="雙向出口" id="item_q_11">
                     <div class="item-title">雙向出口</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>工作空間內宜有兩個出口(或退避空間)，避免單一出入口遭堵塞。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_11" value="Pass" onclick="toggleNote('q_11', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_11" value="Fail" onclick="toggleNote('q_11', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_11" value="NA" onclick="toggleNote('q_11', false)"><div>N/A</div></label>
+                    <div class="item-desc">工作空間內宜有兩個出口(或退避空間)，避免單一出入口遭堵塞。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_11" value="Pass" onclick="toggleNote('q_11', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_11" value="Fail" onclick="toggleNote('q_11', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_11" value="NA" onclick="toggleNote('q_11', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_11" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_11"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_11"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_11" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_11" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="辦公區" data-std="辦公傢俱之擺設應避免影響出入安全，傢俱宜量少質輕無銳角，儘可能固定。" data-name="傢俱安全">
+                <div class="check-item" data-name="傢俱安全" id="item_q_12">
                     <div class="item-title">傢俱安全</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>辦公傢俱之擺設應避免影響出入安全，傢俱宜量少質輕無銳角，儘可能固定。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_12" value="Pass" onclick="toggleNote('q_12', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_12" value="Fail" onclick="toggleNote('q_12', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_12" value="NA" onclick="toggleNote('q_12', false)"><div>N/A</div></label>
+                    <div class="item-desc">辦公傢俱之擺設應避免影響出入安全，傢俱宜量少質輕無銳角，儘可能固定。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_12" value="Pass" onclick="toggleNote('q_12', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_12" value="Fail" onclick="toggleNote('q_12', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_12" value="NA" onclick="toggleNote('q_12', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_12" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_12"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_12"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_12" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_12" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="減少工作空間內出現可以作為武器的銳器或鈍物(如花瓶、未固定的重物)。" data-name="危險物品移除">
+                <div class="check-item" data-name="危險物品移除" id="item_q_13">
                     <div class="item-title">危險物品移除</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>減少工作空間內出現可以作為武器的銳器或鈍物(如花瓶、未固定的重物)。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_13" value="Pass" onclick="toggleNote('q_13', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_13" value="Fail" onclick="toggleNote('q_13', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_13" value="NA" onclick="toggleNote('q_13', false)"><div>N/A</div></label>
+                    <div class="item-desc">減少工作空間內出現可以作為武器的銳器或鈍物(如花瓶、未固定的重物)。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_13" value="Pass" onclick="toggleNote('q_13', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_13" value="Fail" onclick="toggleNote('q_13', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_13" value="NA" onclick="toggleNote('q_13', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_13" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_13"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_13"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_13" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_13" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="保全人員定時巡邏或安裝透明玻璃鏡，加強工作場所之安全監視。" data-name="巡邏與監視">
+                <div class="check-item" data-name="巡邏與監視" id="item_q_14">
                     <div class="item-title">巡邏與監視</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>保全人員定時巡邏或安裝透明玻璃鏡，加強工作場所之安全監視。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_14" value="Pass" onclick="toggleNote('q_14', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_14" value="Fail" onclick="toggleNote('q_14', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_14" value="NA" onclick="toggleNote('q_14', false)"><div>N/A</div></label>
+                    <div class="item-desc">保全人員定時巡邏或安裝透明玻璃鏡，加強工作場所之安全監視。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_14" value="Pass" onclick="toggleNote('q_14', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_14" value="Fail" onclick="toggleNote('q_14', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_14" value="NA" onclick="toggleNote('q_14', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_14" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_14"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_14"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_14" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_14" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="工作場所內之損壞物品，如燒壞的燈具及破窗，應及時修理。" data-name="設施修繕">
+                <div class="check-item" data-name="設施修繕" id="item_q_15">
                     <div class="item-title">設施修繕</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>工作場所內之損壞物品，如燒壞的燈具及破窗，應及時修理。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_15" value="Pass" onclick="toggleNote('q_15', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_15" value="Fail" onclick="toggleNote('q_15', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_15" value="NA" onclick="toggleNote('q_15', false)"><div>N/A</div></label>
+                    <div class="item-desc">工作場所內之損壞物品，如燒壞的燈具及破窗，應及時修理。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_15" value="Pass" onclick="toggleNote('q_15', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_15" value="Fail" onclick="toggleNote('q_15', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_15" value="NA" onclick="toggleNote('q_15', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_15" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_15"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_15"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_15" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_15" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="接待區" data-std="有金錢/頻繁業務交易之櫃台可裝設防彈或防碎玻璃(或加寬櫃台深度)，並另設置退避空間。" data-name="櫃台防護">
+                <div class="check-item" data-name="櫃台防護" id="item_q_16">
                     <div class="item-title">櫃台防護</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>有金錢/頻繁業務交易之櫃台可裝設防彈或防碎玻璃(或加寬櫃台深度)，並另設置退避空間。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_16" value="Pass" onclick="toggleNote('q_16', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_16" value="Fail" onclick="toggleNote('q_16', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_16" value="NA" onclick="toggleNote('q_16', false)"><div>N/A</div></label>
+                    <div class="item-desc">有金錢/頻繁業務交易之櫃台可裝設防彈或防碎玻璃(或加寬櫃台深度)，並另設置退避空間。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_16" value="Pass" onclick="toggleNote('q_16', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_16" value="Fail" onclick="toggleNote('q_16', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_16" value="NA" onclick="toggleNote('q_16', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_16" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_16"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_16"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_16" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_16" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="接待區" data-std="安裝靜音式警報系統並與警政單位/警衛室連線。" data-name="連線警報">
+                <div class="check-item" data-name="連線警報" id="item_q_17">
                     <div class="item-title">連線警報</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>安裝靜音式警報系統並與警政單位/警衛室連線。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_17" value="Pass" onclick="toggleNote('q_17', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_17" value="Fail" onclick="toggleNote('q_17', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_17" value="NA" onclick="toggleNote('q_17', false)"><div>N/A</div></label>
+                    <div class="item-desc">安裝靜音式警報系統並與警政單位/警衛室連線。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_17" value="Pass" onclick="toggleNote('q_17', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_17" value="Fail" onclick="toggleNote('q_17', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_17" value="NA" onclick="toggleNote('q_17', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_17" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_17"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_17"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_17" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_17" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="接待區" data-std="安排舒適座位，準備雜誌、電視等物品，降低等候時的無聊感與焦慮感。" data-name="訪客安撫">
+                <div class="check-item" data-name="訪客安撫" id="item_q_18">
                     <div class="item-title">訪客安撫</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>安排舒適座位，準備雜誌、電視等物品，降低等候時的無聊感與焦慮感。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_18" value="Pass" onclick="toggleNote('q_18', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_18" value="Fail" onclick="toggleNote('q_18', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_18" value="NA" onclick="toggleNote('q_18', false)"><div>N/A</div></label>
+                    <div class="item-desc">安排舒適座位，準備雜誌、電視等物品，降低等候時的無聊感與焦慮感。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_18" value="Pass" onclick="toggleNote('q_18', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_18" value="Fail" onclick="toggleNote('q_18', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_18" value="NA" onclick="toggleNote('q_18', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_18" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_18"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_18"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_18" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_18" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="公共區域" data-std="安裝明亮的照明設備。安裝安全設備(警鈴、緊急按鈕、CCTV)並定期維護測試。" data-name="照明與監控">
+                <div class="check-item" data-name="照明與監控" id="item_q_19">
                     <div class="item-title">照明與監控</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>安裝明亮的照明設備。安裝安全設備(警鈴、緊急按鈕、CCTV)並定期維護測試。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_19" value="Pass" onclick="toggleNote('q_19', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_19" value="Fail" onclick="toggleNote('q_19', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_19" value="NA" onclick="toggleNote('q_19', false)"><div>N/A</div></label>
+                    <div class="item-desc">安裝明亮的照明設備。安裝安全設備(警鈴、緊急按鈕、CCTV)並定期維護測試。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_19" value="Pass" onclick="toggleNote('q_19', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_19" value="Fail" onclick="toggleNote('q_19', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_19" value="NA" onclick="toggleNote('q_19', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_19" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_19"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_19"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_19" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_19" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="實驗室/樣品室" data-std="高風險位置應提供警報系統(警鈴、電話、哨子、短波呼叫器)，供員工求助。" data-name="警報裝置">
+                <div class="check-item" data-name="警報裝置" id="item_q_20">
                     <div class="item-title">警報裝置</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>高風險位置應提供警報系統(警鈴、電話、哨子、短波呼叫器)，供員工求助。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_20" value="Pass" onclick="toggleNote('q_20', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_20" value="Fail" onclick="toggleNote('q_20', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_20" value="NA" onclick="toggleNote('q_20', false)"><div>N/A</div></label>
+                    <div class="item-desc">高風險位置應提供警報系統(警鈴、電話、哨子、短波呼叫器)，供員工求助。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_20" value="Pass" onclick="toggleNote('q_20', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_20" value="Fail" onclick="toggleNote('q_20', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_20" value="NA" onclick="toggleNote('q_20', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_20" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_20"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_20"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_20" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_20" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="實驗室/樣品室" data-std="為避免警報系統激怒加害者，宜使用靜音式警報系統(Silent Alarm)。" data-name="靜音警報">
+                <div class="check-item" data-name="靜音警報" id="item_q_21">
                     <div class="item-title">靜音警報</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>為避免警報系統激怒加害者，宜使用靜音式警報系統(Silent Alarm)。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_21" value="Pass" onclick="toggleNote('q_21', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_21" value="Fail" onclick="toggleNote('q_21', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_21" value="NA" onclick="toggleNote('q_21', false)"><div>N/A</div></label>
+                    <div class="item-desc">為避免警報系統激怒加害者，宜使用靜音式警報系統(Silent Alarm)。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_21" value="Pass" onclick="toggleNote('q_21', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_21" value="Fail" onclick="toggleNote('q_21', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_21" value="NA" onclick="toggleNote('q_21', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_21" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_21"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_21"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_21" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_21" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             </div></details>
-        <details open><summary>行政管制</summary><div class="details-content">
+        <details open>
+            <summary>行政管制</summary>
+            <div class="cat-content">
         
-                <div class="check-item" data-area="接待區" data-std="接待區域應有「訪客登記」或「訪客管制」措施。" data-name="訪客登記">
+                <div class="check-item" data-name="訪客登記" id="item_q_22">
                     <div class="item-title">訪客登記</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>接待區域應有「訪客登記」或「訪客管制」措施。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_22" value="Pass" onclick="toggleNote('q_22', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_22" value="Fail" onclick="toggleNote('q_22', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_22" value="NA" onclick="toggleNote('q_22', false)"><div>N/A</div></label>
+                    <div class="item-desc">接待區域應有「訪客登記」或「訪客管制」措施。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_22" value="Pass" onclick="toggleNote('q_22', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_22" value="Fail" onclick="toggleNote('q_22', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_22" value="NA" onclick="toggleNote('q_22', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_22" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_22"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_22"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_22" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_22" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="區域應劃分公共區域或作業區域(如實驗室、樣品室)，並控管人員進出。" data-name="區域劃分">
+                <div class="check-item" data-name="區域劃分" id="item_q_23">
                     <div class="item-title">區域劃分</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>區域應劃分公共區域或作業區域(如實驗室、樣品室)，並控管人員進出。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_23" value="Pass" onclick="toggleNote('q_23', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_23" value="Fail" onclick="toggleNote('q_23', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_23" value="NA" onclick="toggleNote('q_23', false)"><div>N/A</div></label>
+                    <div class="item-desc">區域應劃分公共區域或作業區域(如實驗室、樣品室)，並控管人員進出。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_23" value="Pass" onclick="toggleNote('q_23', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_23" value="Fail" onclick="toggleNote('q_23', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_23" value="NA" onclick="toggleNote('q_23', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_23" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_23"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_23"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_23" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_23" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="辦公區/實驗室" data-std="配戴識別證或通行證，避免未獲授權之人士擅自進出工作地點。" data-name="識別證">
+                <div class="check-item" data-name="識別證" id="item_q_24">
                     <div class="item-title">識別證</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>配戴識別證或通行證，避免未獲授權之人士擅自進出工作地點。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_24" value="Pass" onclick="toggleNote('q_24', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_24" value="Fail" onclick="toggleNote('q_24', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_24" value="NA" onclick="toggleNote('q_24', false)"><div>N/A</div></label>
+                    <div class="item-desc">配戴識別證或通行證，避免未獲授權之人士擅自進出工作地點。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_24" value="Pass" onclick="toggleNote('q_24', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_24" value="Fail" onclick="toggleNote('q_24', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_24" value="NA" onclick="toggleNote('q_24', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_24" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_24"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_24"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_24" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_24" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="未使用的門予以上鎖，防止加害人進入及藏匿。" data-name="閒置上鎖">
+                <div class="check-item" data-name="閒置上鎖" id="item_q_25">
                     <div class="item-title">閒置上鎖</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>未使用的門予以上鎖，防止加害人進入及藏匿。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_25" value="Pass" onclick="toggleNote('q_25', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_25" value="Fail" onclick="toggleNote('q_25', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_25" value="NA" onclick="toggleNote('q_25', false)"><div>N/A</div></label>
+                    <div class="item-desc">未使用的門予以上鎖，防止加害人進入及藏匿。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_25" value="Pass" onclick="toggleNote('q_25', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_25" value="Fail" onclick="toggleNote('q_25', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_25" value="NA" onclick="toggleNote('q_25', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_25" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_25"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_25"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_25" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_25" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             </div></details>
-        <details open><summary>適性配工</summary><div class="details-content">
+        <details open>
+            <summary>適性配工</summary>
+            <div class="cat-content">
         
-                <div class="check-item" data-area="接待區" data-std="面對大量顧客/訪客尖峰時段，應配置保全人員或增加人力。" data-name="尖峰人力">
+                <div class="check-item" data-name="尖峰人力" id="item_q_26">
                     <div class="item-title">尖峰人力</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>面對大量顧客/訪客尖峰時段，應配置保全人員或增加人力。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_26" value="Pass" onclick="toggleNote('q_26', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_26" value="Fail" onclick="toggleNote('q_26', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_26" value="NA" onclick="toggleNote('q_26', false)"><div>N/A</div></label>
+                    <div class="item-desc">面對大量顧客/訪客尖峰時段，應配置保全人員或增加人力。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_26" value="Pass" onclick="toggleNote('q_26', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_26" value="Fail" onclick="toggleNote('q_26', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_26" value="NA" onclick="toggleNote('q_26', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_26" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_26"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_26"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_26" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_26" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="實驗室/辦公區" data-std="單獨作業或夜間工作，提供宿舍或交通接駁服務(視公司政策)。" data-name="夜間接駁">
+                <div class="check-item" data-name="夜間接駁" id="item_q_27">
                     <div class="item-title">夜間接駁</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>單獨作業或夜間工作，提供宿舍或交通接駁服務(視公司政策)。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_27" value="Pass" onclick="toggleNote('q_27', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_27" value="Fail" onclick="toggleNote('q_27', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_27" value="NA" onclick="toggleNote('q_27', false)"><div>N/A</div></label>
+                    <div class="item-desc">單獨作業或夜間工作，提供宿舍或交通接駁服務(視公司政策)。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_27" value="Pass" onclick="toggleNote('q_27', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_27" value="Fail" onclick="toggleNote('q_27', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_27" value="NA" onclick="toggleNote('q_27', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_27" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_27"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_27"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_27" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_27" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="強化單獨作業人員之緊急應變能力(教育訓練)。" data-name="緊急應變">
+                <div class="check-item" data-name="緊急應變" id="item_q_28">
                     <div class="item-title">緊急應變</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>強化單獨作業人員之緊急應變能力(教育訓練)。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_28" value="Pass" onclick="toggleNote('q_28', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_28" value="Fail" onclick="toggleNote('q_28', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_28" value="NA" onclick="toggleNote('q_28', false)"><div>N/A</div></label>
+                    <div class="item-desc">強化單獨作業人員之緊急應變能力(教育訓練)。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_28" value="Pass" onclick="toggleNote('q_28', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_28" value="Fail" onclick="toggleNote('q_28', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_28" value="NA" onclick="toggleNote('q_28', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_28" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_28"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_28"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_28" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_28" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="實驗室/樣品室" data-std="提供勞工自我防衛工具(如哨子、警報器)。" data-name="防衛工具">
+                <div class="check-item" data-name="防衛工具" id="item_q_29">
                     <div class="item-title">防衛工具</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>提供勞工自我防衛工具(如哨子、警報器)。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_29" value="Pass" onclick="toggleNote('q_29', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_29" value="Fail" onclick="toggleNote('q_29', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_29" value="NA" onclick="toggleNote('q_29', false)"><div>N/A</div></label>
+                    <div class="item-desc">提供勞工自我防衛工具(如哨子、警報器)。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_29" value="Pass" onclick="toggleNote('q_29', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_29" value="Fail" onclick="toggleNote('q_29', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_29" value="NA" onclick="toggleNote('q_29', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_29" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_29"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_29"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_29" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_29" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="夜間或單獨作業時，配置保全人員巡邏。" data-name="保全配置">
+                <div class="check-item" data-name="保全配置" id="item_q_30">
                     <div class="item-title">保全配置</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>夜間或單獨作業時，配置保全人員巡邏。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_30" value="Pass" onclick="toggleNote('q_30', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_30" value="Fail" onclick="toggleNote('q_30', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_30" value="NA" onclick="toggleNote('q_30', false)"><div>N/A</div></label>
+                    <div class="item-desc">夜間或單獨作業時，配置保全人員巡邏。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_30" value="Pass" onclick="toggleNote('q_30', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_30" value="Fail" onclick="toggleNote('q_30', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_30" value="NA" onclick="toggleNote('q_30', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_30" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_30"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_30"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_30" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_30" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="需在不同作業場所移動(如運送樣品)時，明確規定移動流程與路線。" data-name="移動流程">
+                <div class="check-item" data-name="移動流程" id="item_q_31">
                     <div class="item-title">移動流程</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>需在不同作業場所移動(如運送樣品)時，明確規定移動流程與路線。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_31" value="Pass" onclick="toggleNote('q_31', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_31" value="Fail" onclick="toggleNote('q_31', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_31" value="NA" onclick="toggleNote('q_31', false)"><div>N/A</div></label>
+                    <div class="item-desc">需在不同作業場所移動(如運送樣品)時，明確規定移動流程與路線。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_31" value="Pass" onclick="toggleNote('q_31', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_31" value="Fail" onclick="toggleNote('q_31', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_31" value="NA" onclick="toggleNote('q_31', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_31" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_31"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_31"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_31" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_31" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="人事單位" data-std="勞工舉報有遭受不法侵害威脅者，應配置保全或採協同作業(禁止單獨落單)。" data-name="個案保護">
+                <div class="check-item" data-name="個案保護" id="item_q_32">
                     <div class="item-title">個案保護</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>勞工舉報有遭受不法侵害威脅者，應配置保全或採協同作業(禁止單獨落單)。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_32" value="Pass" onclick="toggleNote('q_32', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_32" value="Fail" onclick="toggleNote('q_32', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_32" value="NA" onclick="toggleNote('q_32', false)"><div>N/A</div></label>
+                    <div class="item-desc">勞工舉報有遭受不法侵害威脅者，應配置保全或採協同作業(禁止單獨落單)。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_32" value="Pass" onclick="toggleNote('q_32', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_32" value="Fail" onclick="toggleNote('q_32', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_32" value="NA" onclick="toggleNote('q_32', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_32" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_32"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_32"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_32" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_32" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             </div></details>
-        <details open><summary>工作設計</summary><div class="details-content">
+        <details open>
+            <summary>工作設計</summary>
+            <div class="cat-content">
         
-                <div class="check-item" data-area="接待區" data-std="需與公眾接觸之服務，應簡化工作流程，減少互動衝突。" data-name="流程簡化">
+                <div class="check-item" data-name="流程簡化" id="item_q_33">
                     <div class="item-title">流程簡化</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>需與公眾接觸之服務，應簡化工作流程，減少互動衝突。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_33" value="Pass" onclick="toggleNote('q_33', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_33" value="Fail" onclick="toggleNote('q_33', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_33" value="NA" onclick="toggleNote('q_33', false)"><div>N/A</div></label>
+                    <div class="item-desc">需與公眾接觸之服務，應簡化工作流程，減少互動衝突。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_33" value="Pass" onclick="toggleNote('q_33', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_33" value="Fail" onclick="toggleNote('q_33', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_33" value="NA" onclick="toggleNote('q_33', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_33" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_33"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_33"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_33" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_33" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="排班應取得勞工同意並保有規律性。" data-name="排班規律">
+                <div class="check-item" data-name="排班規律" id="item_q_34">
                     <div class="item-title">排班規律</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>排班應取得勞工同意並保有規律性。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_34" value="Pass" onclick="toggleNote('q_34', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_34" value="Fail" onclick="toggleNote('q_34', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_34" value="NA" onclick="toggleNote('q_34', false)"><div>N/A</div></label>
+                    <div class="item-desc">排班應取得勞工同意並保有規律性。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_34" value="Pass" onclick="toggleNote('q_34', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_34" value="Fail" onclick="toggleNote('q_34', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_34" value="NA" onclick="toggleNote('q_34', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_34" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_34"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_34"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_34" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_34" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="實驗室/樣品室" data-std="避免連續夜班、工時過長或經常性加班累積工作壓力(特別是趕樣品/測試期)。" data-name="過勞預防">
+                <div class="check-item" data-name="過勞預防" id="item_q_35">
                     <div class="item-title">過勞預防</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>避免連續夜班、工時過長或經常性加班累積工作壓力(特別是趕樣品/測試期)。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_35" value="Pass" onclick="toggleNote('q_35', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_35" value="Fail" onclick="toggleNote('q_35', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_35" value="NA" onclick="toggleNote('q_35', false)"><div>N/A</div></label>
+                    <div class="item-desc">避免連續夜班、工時過長或經常性加班累積工作壓力(特別是趕樣品/測試期)。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_35" value="Pass" onclick="toggleNote('q_35', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_35" value="Fail" onclick="toggleNote('q_35', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_35" value="NA" onclick="toggleNote('q_35', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_35" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_35"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_35"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_35" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_35" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="允許適度的勞工自治，保有充分時間對話、分享資訊及解決問題。" data-name="溝通對話">
+                <div class="check-item" data-name="溝通對話" id="item_q_36">
                     <div class="item-title">溝通對話</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>允許適度的勞工自治，保有充分時間對話、分享資訊及解決問題。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_36" value="Pass" onclick="toggleNote('q_36', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_36" value="Fail" onclick="toggleNote('q_36', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_36" value="NA" onclick="toggleNote('q_36', false)"><div>N/A</div></label>
+                    <div class="item-desc">允許適度的勞工自治，保有充分時間對話、分享資訊及解決問題。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_36" value="Pass" onclick="toggleNote('q_36', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_36" value="Fail" onclick="toggleNote('q_36', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_36" value="NA" onclick="toggleNote('q_36', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_36" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_36"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_36"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_36" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_36" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="全區域" data-std="提供勞工社交活動或推動員工協助方案(EAP)，鼓勵參與。" data-name="員工協助">
+                <div class="check-item" data-name="員工協助" id="item_q_37">
                     <div class="item-title">員工協助</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>提供勞工社交活動或推動員工協助方案(EAP)，鼓勵參與。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_37" value="Pass" onclick="toggleNote('q_37', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_37" value="Fail" onclick="toggleNote('q_37', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_37" value="NA" onclick="toggleNote('q_37', false)"><div>N/A</div></label>
+                    <div class="item-desc">提供勞工社交活動或推動員工協助方案(EAP)，鼓勵參與。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_37" value="Pass" onclick="toggleNote('q_37', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_37" value="Fail" onclick="toggleNote('q_37', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_37" value="NA" onclick="toggleNote('q_37', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_37" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_37"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_37"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_37" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_37" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             
-                <div class="check-item" data-area="人事單位" data-std="提供彈性工時、托兒、家暴協助等福利，調和職業家庭責任。" data-name="友善措施">
+                <div class="check-item" data-name="友善措施" id="item_q_38">
                     <div class="item-title">友善措施</div>
-                    <div class="item-desc"><strong>標準說明：</strong><br>提供彈性工時、托兒、家暴協助等福利，調和職業家庭責任。</div>
-                    <div class="radio-container">
-                        <label class="radio-label opt-pass"><input type="radio" name="q_38" value="Pass" onclick="toggleNote('q_38', false)"><div>合格</div></label>
-                        <label class="radio-label opt-fail"><input type="radio" name="q_38" value="Fail" onclick="toggleNote('q_38', true)"><div>改善</div></label>
-                        <label class="radio-label opt-na"><input type="radio" name="q_38" value="NA" onclick="toggleNote('q_38', false)"><div>N/A</div></label>
+                    <div class="item-desc">提供彈性工時、托兒、家暴協助等福利，調和職業家庭責任。</div>
+                    
+                    <div class="radio-group">
+                        <label class="radio-label opt-pass">
+                            <input type="radio" name="q_38" value="Pass" onclick="toggleNote('q_38', false)">
+                            <div>✔ 合格</div>
+                        </label>
+                        <label class="radio-label opt-fail">
+                            <input type="radio" name="q_38" value="Fail" onclick="toggleNote('q_38', true)">
+                            <div>✘ 改善</div>
+                        </label>
+                        <label class="radio-label opt-na">
+                            <input type="radio" name="q_38" value="NA" onclick="toggleNote('q_38', false)">
+                            <div>- 不適用</div>
+                        </label>
                     </div>
+                    
                     <div id="note_q_38" class="note-box">
-                        <div class="note-title">⚠️ 請詳細說明異常情形：</div>
-                        <div class="input-group"><label>1. 現況描述：</label><textarea id="current_q_38"></textarea></div>
-                        <div class="input-group"><label>2. 改善措施：</label><textarea id="improve_q_38"></textarea></div>
+                        <div class="note-label">1. 現況描述 (必填)：</div>
+                        <textarea id="current_q_38" placeholder="請描述異常狀況..."></textarea>
+                        <div class="note-label">2. 建議對策 (必填)：</div>
+                        <textarea id="improve_q_38" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             </div></details>
-        </div>
-        
-        <div class="card" id="sig-section">
-            <h3>✍️ 檢查人員簽章</h3>
-            <p style="font-size:0.85rem; color:#666;">請在下方框線內簽名：</p>
-            <div class="signature-container">
-                <canvas id="sig-canvas"></canvas>
-            </div>
-            <div class="sig-controls">
-                <button class="btn-clear" onclick="clearSignature()">↺ 清除重簽</button>
-            </div>
-        </div>
-        <div style="height: 60px;"></div>
-    </div>
+    </div> </div> <div class="section">
+    <h3>3. 簽名確認 <span style="color:red; font-size:0.8rem;">(必填)</span></h3>
+    <canvas id="sigCanvas"></canvas>
+    <button onclick="clearSig()" style="margin-top:5px; background:#eee; border:none; padding:6px 12px; border-radius:15px; cursor:pointer; color:#555;">清除重簽</button>
+  </div>
+</div>
 
-    <div class="fab-container">
-        <button class="btn-float-main" onclick="generateReport()">
-            <span>📥</span> 下載報告
-        </button>
-        <button class="btn-float-sec" onclick="if(confirm('確定要清空所有內容嗎？')) location.reload()">
-            <span>↺</span> 重置
-        </button>
-    </div>
+<div class="fab-container">
+    <button class="btn-float btn-reset" onclick="if(confirm('確定要清空重填嗎？')) location.reload()">↺ 重置</button>
+    <button class="btn-float btn-sub" onclick="sendEmail()">✉️ 寄給負責人</button>
+    <button class="btn-float btn-main" onclick="generateReport()">📥 下載報告</button>
+</div>
 
-    <script>
-        document.getElementById('check-date').value = new Date().toLocaleDateString('zh-TW');
+<script>
+// 初始化日期
+document.getElementById('check-date').valueAsDate = new Date();
+const managerEmail = "oceanchen@makalot.com.tw";
+let hasSigned = false;
 
-        function filterArea() {
-            const selected = document.getElementById('area-select').value;
-            document.querySelectorAll('.check-item').forEach(item => {
-                const itemArea = item.getAttribute('data-area');
-                if (selected === 'All' || itemArea.includes('全區域') || itemArea.includes(selected)) {
-                    item.classList.remove('hidden');
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-            document.querySelectorAll('details').forEach(detail => {
-                const visible = detail.querySelectorAll('.check-item:not(.hidden)').length;
-                detail.style.display = visible > 0 ? 'block' : 'none';
-            });
-        }
-        
-        function toggleNote(id, show) {
-            const box = document.getElementById('note_' + id);
-            if(show) {
-                box.style.display = 'block';
-                box.querySelector('textarea').focus();
+// 顯示/隱藏 異常說明欄位
+function toggleNote(id, show) {
+    const box = document.getElementById('note_' + id);
+    if(show) { 
+        box.classList.add('show');
+    } else { 
+        box.classList.remove('show');
+    }
+}
+
+// --- 簽名板邏輯 ---
+const canvas = document.getElementById("sigCanvas");
+const ctx = canvas.getContext("2d");
+function resize() { 
+    const ratio = Math.max(window.devicePixelRatio||1, 1);
+    canvas.width = canvas.offsetWidth*ratio; 
+    canvas.height = canvas.offsetHeight*ratio;
+    ctx.scale(ratio,ratio); 
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+}
+window.addEventListener("resize", resize); setTimeout(resize, 500);
+
+let isDrawing = false;
+canvas.addEventListener('mousedown', start); canvas.addEventListener('touchstart', start, {passive:false});
+canvas.addEventListener('mousemove', draw); canvas.addEventListener('touchmove', draw, {passive:false});
+canvas.addEventListener('mouseup', stop); canvas.addEventListener('mouseout', stop); canvas.addEventListener('touchend', stop);
+
+function start(e) { if(e.target==canvas) e.preventDefault(); hasSigned=true; ctx.beginPath(); var p=pos(e); ctx.moveTo(p.x,p.y); isDrawing=true; }
+function draw(e) { if(!isDrawing) return; if(e.target==canvas) e.preventDefault(); var p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); }
+function stop() { isDrawing = false; }
+function pos(e) { 
+    var r=canvas.getBoundingClientRect(); 
+    var cx=e.touches?e.touches[0].clientX:e.clientX; 
+    var cy=e.touches?e.touches[0].clientY:e.clientY; 
+    return {x:cx-r.left,y:cy-r.top}; 
+}
+function clearSig() { ctx.clearRect(0,0,canvas.width,canvas.height); hasSigned = false; }
+
+// --- 產生報告 (修改核心) ---
+function generateReport() {
+    const inspector = document.getElementById('inspector').value.trim();
+    if(!inspector) { alert("請輸入檢點人員姓名"); return; }
+    
+    // 檢查異常描述
+    let hasError = false;
+    document.querySelectorAll('.check-item').forEach(item => {
+        const radio = item.querySelector('input[type="radio"]:checked');
+        if(radio && radio.value === 'Fail') {
+            const id = radio.name;
+            const cur = document.getElementById('current_'+id).value.trim();
+            const imp = document.getElementById('improve_'+id).value.trim();
+            if(!cur || !imp) {
+                hasError = true;
+                document.getElementById('note_'+id).classList.add('error-border');
             } else {
-                box.style.display = 'none';
-                box.querySelectorAll('textarea').forEach(t => t.value = '');
+                document.getElementById('note_'+id).classList.remove('error-border');
             }
         }
+    });
+    
+    if(hasError) { alert("請填寫所有「改善」項目的現況描述與對策！"); return; }
+    if(!hasSigned) { alert("請務必在下方「簽名」確認後才能下載！"); return; }
 
-        const canvas = document.getElementById('sig-canvas');
-        const ctx = canvas.getContext('2d');
-        let isDrawing = false;
+    const date = document.getElementById('check-date').value;
+    const dept = document.getElementById('dept-select').value;
+    
+    // 建立報告內容
+    let rows = "";
+    let failCount = 0;
+    
+    document.querySelectorAll('.check-item').forEach(item => {
+        const name = item.getAttribute('data-name');
         
-        function resizeCanvas() {
-            const rect = canvas.parentElement.getBoundingClientRect();
-            canvas.width = rect.width;
-            canvas.height = rect.height;
-            ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.strokeStyle = '#000';
+        // ★★★ 抓取標準描述 (Standard Description) ★★★
+        const stdDesc = item.querySelector('.item-desc').innerText;
+        
+        const radio = item.querySelector('input[type="radio"]:checked');
+        if(!radio) return; // 未填寫的跳過
+        
+        const status = radio.value;
+        const id = radio.name;
+        
+        let cDesc = "", iDesc = "", resHTML = "", rowBg = "";
+        
+        if (status === 'Pass') {
+            // ★★★ 這裡改成填入標準描述，並用深灰色顯示 ★★★
+            cDesc = `<span style="color:#555;">${stdDesc}</span>`; 
+            iDesc = "-"; 
+            resHTML = `<td style="color:#27ae60;font-weight:bold;text-align:center;">✔ 合格</td>`;
+        } else if (status === 'Fail') {
+            const cv = document.getElementById('current_' + id).value;
+            const iv = document.getElementById('improve_' + id).value;
+            cDesc = `<span style="color:#c0392b;">${cv}</span>`;
+            iDesc = `<span style="color:#c0392b;">${iv}</span>`;
+            resHTML = `<td style="color:#c0392b;font-weight:bold;text-align:center;">✘ 改善</td>`; 
+            rowBg = "background-color:#fff5f5;"; 
+            failCount++;
+        } else {
+            cDesc = "不適用"; iDesc = "-"; 
+            resHTML = `<td style="color:#999;text-align:center;">N/A</td>`;
         }
-        window.addEventListener('resize', resizeCanvas);
-        setTimeout(resizeCanvas, 500);
+        
+        rows += `<tr style="${rowBg}">
+            <td>${name}</td>
+            <td>${cDesc}</td>
+            <td>${iDesc}</td>
+            ${resHTML}
+        </tr>`;
+    });
 
-        function getPos(e) {
-            const rect = canvas.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            return { x: clientX - rect.left, y: clientY - rect.top };
-        }
-        function startDraw(e) { isDrawing = true; const pos = getPos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); e.preventDefault(); }
-        function draw(e) { if (!isDrawing) return; const pos = getPos(e); ctx.lineTo(pos.x, pos.y); ctx.stroke(); e.preventDefault(); }
-        function stopDraw() { isDrawing = false; }
-        canvas.addEventListener('mousedown', startDraw); canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDraw); canvas.addEventListener('mouseout', stopDraw);
-        canvas.addEventListener('touchstart', startDraw, {passive: false}); canvas.addEventListener('touchmove', draw, {passive: false}); canvas.addEventListener('touchend', stopDraw);
-        function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
-        function isCanvasBlank(canvas) {
-            const blank = document.createElement('canvas'); blank.width = canvas.width; blank.height = canvas.height;
-            return canvas.toDataURL() === blank.toDataURL();
-        }
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>檢點報告-${dept}-${inspector}</title>
+    <style>
+        body{font-family:sans-serif;padding:20px; color:#333;}
+        table{width:100%;border-collapse:collapse;margin-top:10px;}
+        td,th{border:1px solid #ccc;padding:8px;font-size:0.9rem;vertical-align:top;}
+        th{background:#f2f2f2;}
+        .header{text-align:center;border-bottom:2px solid #0288d1;margin-bottom:20px;padding-bottom:10px;}
+    </style></head><body>
+    <div style="text-align:right;font-size:0.8rem;color:#888;">v17.1 (自動填入標準版)</div>
+    <div class="header">
+        <h2 style="margin:0;">職場不法侵害環境檢點報告</h2>
+    </div>
+    <p><strong>人員：</strong>${inspector} &nbsp;|&nbsp; <strong>部門：</strong>${dept} &nbsp;|&nbsp; <strong>日期：</strong>${date}</p>
+    <table>
+      <thead>
+        <tr>
+          <th width="20%">檢點項目</th>
+          <th width="40%">現況描述</th>
+          <th width="30%">改善措施</th>
+          <th width="10%">結果</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    
+    <p style="margin-top:15px;"><strong>結果統計：</strong>${failCount > 0 ? '<span style="color:red">異常 (' + failCount + ')</span>' : '<span style="color:green">全數合格</span>'}</p>
+    
+    <div style="margin-top:30px; display:flex; gap:50px;">
+        <div>
+            <p>檢點人員簽章：</p>
+            <img src="${canvas.toDataURL()}" style="height:60px;border-bottom:1px solid #000;">
+        </div>
+        <div>
+            <p>職安人員複核：</p>
+            <div style="height:60px; width:150px; border-bottom:1px solid #000; color:#ccc; display:flex; align-items:end;">(請簽核)</div>
+        </div>
+    </div>
+    </body></html>`;
+    
+    const blob = new Blob([html], {type: "text/html"});
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = `環境檢點報告_${dept}_${inspector}_${date}.html`;
+    link.click();
+    
+    alert("報告下載完成！請接著點選「寄給負責人」並附加檔案。");
+}
 
-        function generateReport() {
-            const inspector = document.getElementById('inspector').value || '未署名';
-            const date = document.getElementById('check-date').value;
-            const area = document.getElementById('area-select').value;
-            
-            let sigImg = "";
-            if (!isCanvasBlank(canvas)) {
-                sigImg = `<img src="${canvas.toDataURL()}" style="height:60px; margin-bottom:-5px;">`;
-            } else {
-                sigImg = `<span style="color:#999; font-style:italic;">(未簽署)</span>`;
-            }
-
-            // BOM + Meta Charset 確保手機不亂碼
-            let reportHTML = `
-            <!DOCTYPE html>
-            <html lang="zh-TW">
-            <head>
-                <meta charset="UTF-8"> 
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>檢點報告_${date}</title>
-                <style>
-                    body { font-family: "Microsoft JhengHei", -apple-system, sans-serif; padding: 30px; color: #333; }
-                    h1 { text-align: center; border-bottom: 3px solid #2563eb; padding-bottom: 15px; color: #2563eb; }
-                    .info-box { background: #f0f9ff; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #bae6fd; font-weight: bold; font-size: 1.1rem; }
-                    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                    th, td { border: 1px solid #cbd5e1; padding: 12px; text-align: left; vertical-align: top; }
-                    th { background-color: #f1f5f9; font-weight: bold; }
-                    .status-pass { color: #15803d; background-color: #f0fdf4; text-align: center; font-weight: bold; }
-                    .status-fail { color: #b91c1c; background-color: #fef2f2; text-align: center; font-weight: bold; }
-                    .status-na { color: #64748b; background-color: #f8fafc; text-align: center; }
-                    .row-fail { background-color: #fff1f2 !important; border-left: 5px solid #ef4444; }
-                    .footer-sig { margin-top: 50px; text-align: right; }
-                    .sig-block { display: inline-block; text-align: center; min-width: 200px; }
-                    .sig-block p { border-top: 1px solid #333; padding-top: 10px; font-weight: bold; margin-top: 5px; }
-                </style>
-            </head>
-            <body>
-                <h1>🛡️ 執行職務遭受不法侵害預防 - 環境檢點表</h1>
-                <div class="info-box">
-                    檢點日期：${date} &nbsp; | &nbsp;
-                    檢點區域：${area} &nbsp; | &nbsp;
-                    檢點人員：${inspector}
-                </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th width="25%">檢點項目</th>
-                            <th width="35%">現況描述</th>
-                            <th width="30%">改善措施</th>
-                            <th width="10%">結果</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            `;
-
-            const items = document.querySelectorAll('.check-item:not(.hidden)');
-            let failCount = 0;
-            items.forEach(item => {
-                const name = item.getAttribute('data-name');
-                const std = item.getAttribute('data-std');
-                const radio = item.querySelector('input[type="radio"]:checked');
-                const status = radio ? radio.value : '';
-                if (!status) return;
-                const radioName = item.querySelector('input[type="radio"]').name;
-                let cDesc = "", iDesc = "", res = "", cls = "";
-                if (status === 'Pass') {
-                    cDesc = `<span style="color:#666">符合標準：</span>${std}`; iDesc = "維持現狀"; res = `<td class="status-pass">✔ 合格</td>`;
-                } else if (status === 'Fail') {
-                    const cv = document.getElementById('current_' + radioName).value;
-                    const iv = document.getElementById('improve_' + radioName).value;
-                    cDesc = `<strong style="color:#b91c1c">異常現況：</strong><br>${cv}`;
-                    iDesc = `<strong style="color:#b91c1c">改善對策：</strong><br>${iv}`;
-                    res = `<td class="status-fail">✘ 改善</td>`; cls = "row-fail"; failCount++;
-                } else {
-                    cDesc = "不適用"; iDesc = "-"; res = `<td class="status-na">N/A</td>`;
-                }
-                reportHTML += `<tr class="${cls}"><td><b>${name}</b></td><td>${cDesc}</td><td>${iDesc}</td>${res}</tr>`;
-            });
-            reportHTML += `</tbody></table>`;
-            if(failCount > 0) reportHTML += `<p style="color:red;font-weight:bold;margin-top:20px;">⚠️ 共 ${failCount} 項異常，請追蹤改善。</p>`;
-            else reportHTML += `<p style="color:green;font-weight:bold;margin-top:20px;">✔ 全數合格。</p>`;
-
-            reportHTML += `
-                <div class="footer-sig">
-                    <div class="sig-block">
-                        <div>${sigImg}</div>
-                        <p>檢點人員簽章</p>
-                    </div>
-                </div>
-            </body></html>
-            `;
-
-            const blob = new Blob(['\uFEFF', reportHTML], {type: 'text/html;charset=utf-8'});
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = `環境檢點報告_${area}_${date}.html`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-        filterArea();
-    </script>
+function sendEmail() {
+    const inspector = document.getElementById('inspector').value;
+    const dept = document.getElementById('dept-select').value;
+    const subject = `環境檢點報告 - ${dept} - ${inspector}`;
+    const body = `負責人您好，%0D%0A%0D%0A附件為我的環境檢點報告，請查收。%0D%0A%0D%0A檢點人員：${inspector}`;
+    window.location.href = `mailto:${managerEmail}?subject=${subject}&body=${body}`;
+}
+</script>
 </body>
 </html>
-
-
