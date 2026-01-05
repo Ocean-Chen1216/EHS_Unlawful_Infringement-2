@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>MK環境檢點表 v17.1 (自動填入標準版)</title>
+<title>職場不法侵害預防之作業場所環境檢點 v17.1 (自動填入標準版)</title>
 <link rel="icon" href="icon-192.png" type="image/png">
 <link rel="manifest" href="manifest.json">
 <style>
@@ -1045,7 +1045,7 @@ function generateReport() {
     </style></head><body>
     <div style="text-align:right;font-size:0.8rem;color:#888;">v17.1 (自動填入標準版)</div>
     <div class="header">
-        <h2 style="margin:0;">職場不法侵害環境檢點報告</h2>
+        <h2 style="margin:0;">職場不法侵害預防之作業場所環境檢點報告</h2>
     </div>
     <p><strong>人員：</strong>${inspector} &nbsp;|&nbsp; <strong>部門：</strong>${dept} &nbsp;|&nbsp; <strong>日期：</strong>${date}</p>
     <table>
@@ -1077,7 +1077,7 @@ function generateReport() {
     const blob = new Blob([html], {type: "text/html"});
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = `環境檢點報告_${dept}_${inspector}_${date}.html`;
+    link.download = `不法侵害環境檢點報告_${dept}_${inspector}_${date}.html`;
     link.click();
     
     alert("報告下載完成！請接著點選「寄給負責人」並附加檔案。");
@@ -1086,11 +1086,12 @@ function generateReport() {
 function sendEmail() {
     const inspector = document.getElementById('inspector').value;
     const dept = document.getElementById('dept-select').value;
-    const subject = `環境檢點報告 - ${dept} - ${inspector}`;
-    const body = `負責人您好，%0D%0A%0D%0A附件為我的環境檢點報告，請查收。%0D%0A%0D%0A檢點人員：${inspector}`;
+    const subject = `職場不法侵害預防之作業場所環境檢點報告 - ${dept} - ${inspector}`;
+    const body = `負責人您好，%0D%0A%0D%0A附件為我的不法侵害環境檢點報告，請查收。%0D%0A%0D%0A檢點人員：${inspector}`;
     window.location.href = `mailto:${managerEmail}?subject=${subject}&body=${body}`;
 }
 </script>
 </body>
 </html>
+
 
