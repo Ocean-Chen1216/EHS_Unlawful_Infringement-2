@@ -106,8 +106,8 @@
   
   <div class="section">
     <h3>1. 基本資料</h3>
-    <label>檢點人員</label><input type="text" id="inspector" placeholder="請輸入姓名">
-    <label>受稽部門</label><select id="dept-select"><option value="V1">V1</option>
+    <label>姓名</label><input type="text" id="inspector" placeholder="請輸入姓名">
+    <label>部門</label><select id="dept-select"><option value="V1">V1</option>
 <option value="V2">V2</option>
 <option value="V3">V3</option>
 <option value="V5">V5</option>
@@ -121,7 +121,7 @@
 <option value="運籌">運籌</option>
 <option value="新事業">新事業</option>
 <option value="總管理">總管理</option></select>
-    <label>檢點日期</label><input type="date" id="check-date">
+    <label>日期</label><input type="date" id="check-date">
   </div>
 
   <div class="section">
@@ -186,9 +186,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="死角照明" id="item_q_2">
-                    <div class="item-title">死角照明</div>
-                    <div class="item-desc">特別是夜間出入口、停車場及貯藏室(樣品室)應有充足照明，無死角。</div>
+                <div class="check-item" data-name="溫濕度控制" id="item_q_2">
+                    <div class="item-title">溫濕度控制</div>
+                    <div class="item-desc">在擁擠區域及天氣燥熱時，應保持空間內適當溫度、濕度及通風良好。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -213,9 +213,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="溫濕度控制" id="item_q_3">
-                    <div class="item-title">溫濕度控制</div>
-                    <div class="item-desc">在擁擠區域及天氣燥熱時，應保持空間內適當溫度、濕度及通風良好。</div>
+                <div class="check-item" data-name="結構安全" id="item_q_3">
+                    <div class="item-title">結構安全</div>
+                    <div class="item-desc">維護建築物理結構及設備之安全。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -239,10 +239,14 @@
                         <textarea id="improve_q_3" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
-            
-                <div class="check-item" data-name="異味消除" id="item_q_4">
-                    <div class="item-title">異味消除</div>
-                    <div class="item-desc">實驗室與作業場所應消除異味，避免環境不適引發情緒。</div>
+            </div></details>
+        <details open>
+            <summary>工作場所設計</summary>
+            <div class="cat-content">
+        
+                <div class="check-item" data-name="通道規劃" id="item_q_4">
+                    <div class="item-title">通道規劃</div>
+                    <div class="item-desc">盡量減少對外通道分歧，確保動線單純。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -267,9 +271,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="結構安全" id="item_q_5">
-                    <div class="item-title">結構安全</div>
-                    <div class="item-desc">維護建築物理結構及設備之安全。</div>
+                <div class="check-item" data-name="門禁權限" id="item_q_5">
+                    <div class="item-title">門禁權限</div>
+                    <div class="item-desc">員工識別證、加設密碼鎖與門禁、訪客登記等措施，避免未獲授權之人擅自進出。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -293,14 +297,10 @@
                         <textarea id="improve_q_5" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
-            </div></details>
-        <details open>
-            <summary>場所設計</summary>
-            <div class="cat-content">
-        
-                <div class="check-item" data-name="通道規劃" id="item_q_6">
-                    <div class="item-title">通道規劃</div>
-                    <div class="item-desc">盡量減少對外通道分歧，確保動線單純。</div>
+            
+                <div class="check-item" data-name="門鎖管理" id="item_q_6">
+                    <div class="item-title">門鎖管理</div>
+                    <div class="item-desc">未使用之門予以上鎖，防止加害人進入及藏匿，惟應符合消防法規。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -325,9 +325,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="門禁權限" id="item_q_7">
-                    <div class="item-title">門禁權限</div>
-                    <div class="item-desc">員工識別證、加設密碼鎖與門禁、訪客登記等措施，避免未獲授權之人擅自進出。</div>
+                <div class="check-item" data-name="設施標示" id="item_q_7">
+                    <div class="item-title">設施標示</div>
+                    <div class="item-desc">廁所、茶水間、公共電話區應有明顯標示，方便運用及有適當維護。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -352,9 +352,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="門鎖管理" id="item_q_8">
-                    <div class="item-title">門鎖管理</div>
-                    <div class="item-desc">未使用之門予以上鎖，防止加害人進入及藏匿(如樣品室)，惟應符合消防法規。</div>
+                <div class="check-item" data-name="緊急疏散" id="item_q_8">
+                    <div class="item-title">緊急疏散</div>
+                    <div class="item-desc">應建立緊急疏散程序。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -379,9 +379,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="設施標示" id="item_q_9">
-                    <div class="item-title">設施標示</div>
-                    <div class="item-desc">廁所、茶水間、公共電話區應有明顯標示，方便運用及有適當維護。</div>
+                <div class="check-item" data-name="雙向出口" id="item_q_9">
+                    <div class="item-title">雙向出口</div>
+                    <div class="item-desc">工作空間內宜有兩個出口(或退避空間)，避免單一出入口遭堵塞。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -406,9 +406,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="緊急疏散" id="item_q_10">
-                    <div class="item-title">緊急疏散</div>
-                    <div class="item-desc">應設置安全區域並建立緊急疏散程序。</div>
+                <div class="check-item" data-name="傢俱安全" id="item_q_10">
+                    <div class="item-title">傢俱安全</div>
+                    <div class="item-desc">辦公傢俱之擺設應避免影響出入安全，傢俱宜量少質輕無銳角，儘可能固定。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -433,9 +433,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="雙向出口" id="item_q_11">
-                    <div class="item-title">雙向出口</div>
-                    <div class="item-desc">工作空間內宜有兩個出口(或退避空間)，避免單一出入口遭堵塞。</div>
+                <div class="check-item" data-name="巡邏與監視" id="item_q_11">
+                    <div class="item-title">巡邏與監視</div>
+                    <div class="item-desc">保全人員定時巡邏或安裝CCTV，加強工作場所之安全監視。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -460,9 +460,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="傢俱安全" id="item_q_12">
-                    <div class="item-title">傢俱安全</div>
-                    <div class="item-desc">辦公傢俱之擺設應避免影響出入安全，傢俱宜量少質輕無銳角，儘可能固定。</div>
+                <div class="check-item" data-name="設施修繕" id="item_q_12">
+                    <div class="item-title">設施修繕</div>
+                    <div class="item-desc">工作場所內之損壞物品，如燒壞的燈具及破窗，應及時修理。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -487,9 +487,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="危險物品移除" id="item_q_13">
-                    <div class="item-title">危險物品移除</div>
-                    <div class="item-desc">減少工作空間內出現可以作為武器的銳器或鈍物(如花瓶、未固定的重物)。</div>
+                <div class="check-item" data-name="連線警報" id="item_q_13">
+                    <div class="item-title">連線警報</div>
+                    <div class="item-desc">安裝靜音式警報系統並與警政單位/警衛室連線。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -514,9 +514,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="巡邏與監視" id="item_q_14">
-                    <div class="item-title">巡邏與監視</div>
-                    <div class="item-desc">保全人員定時巡邏或安裝透明玻璃鏡，加強工作場所之安全監視。</div>
+                <div class="check-item" data-name="照明與監控" id="item_q_14">
+                    <div class="item-title">照明與監控</div>
+                    <div class="item-desc">安裝明亮的照明設備。安裝安全設備(警鈴、緊急按鈕、CCTV)並定期維護測試。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -540,10 +540,14 @@
                         <textarea id="improve_q_14" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
-            
-                <div class="check-item" data-name="設施修繕" id="item_q_15">
-                    <div class="item-title">設施修繕</div>
-                    <div class="item-desc">工作場所內之損壞物品，如燒壞的燈具及破窗，應及時修理。</div>
+            </div></details>
+        <details open>
+            <summary>行政管制</summary>
+            <div class="cat-content">
+        
+                <div class="check-item" data-name="訪客登記" id="item_q_15">
+                    <div class="item-title">訪客登記</div>
+                    <div class="item-desc">接待區域應有「訪客登記」或「訪客管制」措施。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -568,9 +572,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="櫃台防護" id="item_q_16">
-                    <div class="item-title">櫃台防護</div>
-                    <div class="item-desc">有金錢/頻繁業務交易之櫃台可裝設防彈或防碎玻璃(或加寬櫃台深度)，並另設置退避空間。</div>
+                <div class="check-item" data-name="區域劃分" id="item_q_16">
+                    <div class="item-title">區域劃分</div>
+                    <div class="item-desc">區域應劃分公共區域或作業區域，並控管人員進出。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -595,9 +599,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="連線警報" id="item_q_17">
-                    <div class="item-title">連線警報</div>
-                    <div class="item-desc">安裝靜音式警報系統並與警政單位/警衛室連線。</div>
+                <div class="check-item" data-name="識別證" id="item_q_17">
+                    <div class="item-title">識別證</div>
+                    <div class="item-desc">配戴識別證或通行證，避免未獲授權之人士擅自進出工作地點。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -622,9 +626,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="訪客安撫" id="item_q_18">
-                    <div class="item-title">訪客安撫</div>
-                    <div class="item-desc">安排舒適座位，準備雜誌、電視等物品，降低等候時的無聊感與焦慮感。</div>
+                <div class="check-item" data-name="閒置上鎖" id="item_q_18">
+                    <div class="item-title">閒置上鎖</div>
+                    <div class="item-desc">未使用的門予以上鎖，防止加害人進入及藏匿。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -648,10 +652,14 @@
                         <textarea id="improve_q_18" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
-            
-                <div class="check-item" data-name="照明與監控" id="item_q_19">
-                    <div class="item-title">照明與監控</div>
-                    <div class="item-desc">安裝明亮的照明設備。安裝安全設備(警鈴、緊急按鈕、CCTV)並定期維護測試。</div>
+            </div></details>
+        <details open>
+            <summary>適性配工</summary>
+            <div class="cat-content">
+        
+                <div class="check-item" data-name="夜間接駁" id="item_q_19">
+                    <div class="item-title">夜間接駁</div>
+                    <div class="item-desc">單獨作業或夜間工作，提供宿舍或交通接駁服務(視公司政策)。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -676,9 +684,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="警報裝置" id="item_q_20">
-                    <div class="item-title">警報裝置</div>
-                    <div class="item-desc">高風險位置應提供警報系統(警鈴、電話、哨子、短波呼叫器)，供員工求助。</div>
+                <div class="check-item" data-name="移動流程" id="item_q_20">
+                    <div class="item-title">移動流程</div>
+                    <div class="item-desc">需在不同作業場所移動(如運送樣品)時，明確規定移動流程與路線。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -703,9 +711,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="靜音警報" id="item_q_21">
-                    <div class="item-title">靜音警報</div>
-                    <div class="item-desc">為避免警報系統激怒加害者，宜使用靜音式警報系統(Silent Alarm)。</div>
+                <div class="check-item" data-name="個案保護" id="item_q_21">
+                    <div class="item-title">個案保護</div>
+                    <div class="item-desc">勞工舉報有遭受不法侵害威脅者，應配置保全或採協同作業(禁止單獨落單)。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -731,12 +739,12 @@
                 </div>
             </div></details>
         <details open>
-            <summary>行政管制</summary>
+            <summary>工作設計</summary>
             <div class="cat-content">
         
-                <div class="check-item" data-name="訪客登記" id="item_q_22">
-                    <div class="item-title">訪客登記</div>
-                    <div class="item-desc">接待區域應有「訪客登記」或「訪客管制」措施。</div>
+                <div class="check-item" data-name="流程簡化" id="item_q_22">
+                    <div class="item-title">流程簡化</div>
+                    <div class="item-desc">需與公眾接觸之服務，應簡化工作流程，減少互動衝突。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -761,9 +769,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="區域劃分" id="item_q_23">
-                    <div class="item-title">區域劃分</div>
-                    <div class="item-desc">區域應劃分公共區域或作業區域(如實驗室、樣品室)，並控管人員進出。</div>
+                <div class="check-item" data-name="排班規律" id="item_q_23">
+                    <div class="item-title">排班規律</div>
+                    <div class="item-desc">排班應取得勞工同意並保有規律性。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -788,9 +796,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="識別證" id="item_q_24">
-                    <div class="item-title">識別證</div>
-                    <div class="item-desc">配戴識別證或通行證，避免未獲授權之人士擅自進出工作地點。</div>
+                <div class="check-item" data-name="過勞預防" id="item_q_24">
+                    <div class="item-title">過勞預防</div>
+                    <div class="item-desc">避免連續夜班、工時過長或經常性加班累積工作壓力(特別是趕樣品/測試期)。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -815,9 +823,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="閒置上鎖" id="item_q_25">
-                    <div class="item-title">閒置上鎖</div>
-                    <div class="item-desc">未使用的門予以上鎖，防止加害人進入及藏匿。</div>
+                <div class="check-item" data-name="溝通對話" id="item_q_25">
+                    <div class="item-title">溝通對話</div>
+                    <div class="item-desc">允許適度的勞工自治，保有充分時間對話、分享資訊及解決問題。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -841,14 +849,10 @@
                         <textarea id="improve_q_25" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
-            </div></details>
-        <details open>
-            <summary>適性配工</summary>
-            <div class="cat-content">
-        
-                <div class="check-item" data-name="尖峰人力" id="item_q_26">
-                    <div class="item-title">尖峰人力</div>
-                    <div class="item-desc">面對大量顧客/訪客尖峰時段，應配置保全人員或增加人力。</div>
+            
+                <div class="check-item" data-name="員工協助" id="item_q_26">
+                    <div class="item-title">員工協助</div>
+                    <div class="item-desc">提供勞工社交活動或推動員工協助方案(EAP)，鼓勵參與。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -873,9 +877,9 @@
                     </div>
                 </div>
             
-                <div class="check-item" data-name="夜間接駁" id="item_q_27">
-                    <div class="item-title">夜間接駁</div>
-                    <div class="item-desc">單獨作業或夜間工作，提供宿舍或交通接駁服務(視公司政策)。</div>
+                <div class="check-item" data-name="友善措施" id="item_q_27">
+                    <div class="item-title">友善措施</div>
+                    <div class="item-desc">提供彈性工時、托兒、家暴協助等福利，調和職業家庭責任。</div>
                     
                     <div class="radio-group">
                         <label class="radio-label opt-pass">
@@ -897,307 +901,6 @@
                         <textarea id="current_q_27" placeholder="請描述異常狀況..."></textarea>
                         <div class="note-label">2. 建議對策 (必填)：</div>
                         <textarea id="improve_q_27" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="緊急應變" id="item_q_28">
-                    <div class="item-title">緊急應變</div>
-                    <div class="item-desc">強化單獨作業人員之緊急應變能力(教育訓練)。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_28" value="Pass" onclick="toggleNote('q_28', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_28" value="Fail" onclick="toggleNote('q_28', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_28" value="NA" onclick="toggleNote('q_28', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_28" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_28" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_28" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="防衛工具" id="item_q_29">
-                    <div class="item-title">防衛工具</div>
-                    <div class="item-desc">提供勞工自我防衛工具(如哨子、警報器)。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_29" value="Pass" onclick="toggleNote('q_29', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_29" value="Fail" onclick="toggleNote('q_29', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_29" value="NA" onclick="toggleNote('q_29', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_29" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_29" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_29" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="保全配置" id="item_q_30">
-                    <div class="item-title">保全配置</div>
-                    <div class="item-desc">夜間或單獨作業時，配置保全人員巡邏。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_30" value="Pass" onclick="toggleNote('q_30', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_30" value="Fail" onclick="toggleNote('q_30', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_30" value="NA" onclick="toggleNote('q_30', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_30" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_30" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_30" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="移動流程" id="item_q_31">
-                    <div class="item-title">移動流程</div>
-                    <div class="item-desc">需在不同作業場所移動(如運送樣品)時，明確規定移動流程與路線。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_31" value="Pass" onclick="toggleNote('q_31', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_31" value="Fail" onclick="toggleNote('q_31', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_31" value="NA" onclick="toggleNote('q_31', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_31" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_31" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_31" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="個案保護" id="item_q_32">
-                    <div class="item-title">個案保護</div>
-                    <div class="item-desc">勞工舉報有遭受不法侵害威脅者，應配置保全或採協同作業(禁止單獨落單)。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_32" value="Pass" onclick="toggleNote('q_32', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_32" value="Fail" onclick="toggleNote('q_32', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_32" value="NA" onclick="toggleNote('q_32', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_32" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_32" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_32" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            </div></details>
-        <details open>
-            <summary>工作設計</summary>
-            <div class="cat-content">
-        
-                <div class="check-item" data-name="流程簡化" id="item_q_33">
-                    <div class="item-title">流程簡化</div>
-                    <div class="item-desc">需與公眾接觸之服務，應簡化工作流程，減少互動衝突。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_33" value="Pass" onclick="toggleNote('q_33', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_33" value="Fail" onclick="toggleNote('q_33', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_33" value="NA" onclick="toggleNote('q_33', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_33" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_33" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_33" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="排班規律" id="item_q_34">
-                    <div class="item-title">排班規律</div>
-                    <div class="item-desc">排班應取得勞工同意並保有規律性。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_34" value="Pass" onclick="toggleNote('q_34', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_34" value="Fail" onclick="toggleNote('q_34', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_34" value="NA" onclick="toggleNote('q_34', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_34" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_34" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_34" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="過勞預防" id="item_q_35">
-                    <div class="item-title">過勞預防</div>
-                    <div class="item-desc">避免連續夜班、工時過長或經常性加班累積工作壓力(特別是趕樣品/測試期)。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_35" value="Pass" onclick="toggleNote('q_35', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_35" value="Fail" onclick="toggleNote('q_35', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_35" value="NA" onclick="toggleNote('q_35', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_35" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_35" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_35" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="溝通對話" id="item_q_36">
-                    <div class="item-title">溝通對話</div>
-                    <div class="item-desc">允許適度的勞工自治，保有充分時間對話、分享資訊及解決問題。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_36" value="Pass" onclick="toggleNote('q_36', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_36" value="Fail" onclick="toggleNote('q_36', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_36" value="NA" onclick="toggleNote('q_36', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_36" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_36" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_36" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="員工協助" id="item_q_37">
-                    <div class="item-title">員工協助</div>
-                    <div class="item-desc">提供勞工社交活動或推動員工協助方案(EAP)，鼓勵參與。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_37" value="Pass" onclick="toggleNote('q_37', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_37" value="Fail" onclick="toggleNote('q_37', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_37" value="NA" onclick="toggleNote('q_37', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_37" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_37" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_37" placeholder="請輸入建議對策..."></textarea>
-                    </div>
-                </div>
-            
-                <div class="check-item" data-name="友善措施" id="item_q_38">
-                    <div class="item-title">友善措施</div>
-                    <div class="item-desc">提供彈性工時、托兒、家暴協助等福利，調和職業家庭責任。</div>
-                    
-                    <div class="radio-group">
-                        <label class="radio-label opt-pass">
-                            <input type="radio" name="q_38" value="Pass" onclick="toggleNote('q_38', false)">
-                            <div>✔ 合格</div>
-                        </label>
-                        <label class="radio-label opt-fail">
-                            <input type="radio" name="q_38" value="Fail" onclick="toggleNote('q_38', true)">
-                            <div>✘ 改善</div>
-                        </label>
-                        <label class="radio-label opt-na">
-                            <input type="radio" name="q_38" value="NA" onclick="toggleNote('q_38', false)">
-                            <div>- 不適用</div>
-                        </label>
-                    </div>
-                    
-                    <div id="note_q_38" class="note-box">
-                        <div class="note-label">1. 現況描述 (必填)：</div>
-                        <textarea id="current_q_38" placeholder="請描述異常狀況..."></textarea>
-                        <div class="note-label">2. 建議對策 (必填)：</div>
-                        <textarea id="improve_q_38" placeholder="請輸入建議對策..."></textarea>
                     </div>
                 </div>
             </div></details>
